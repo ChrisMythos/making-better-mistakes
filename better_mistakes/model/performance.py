@@ -30,10 +30,12 @@ def accuracy(output, target, ks=(1,)):
         # Get the class index of the top <maxk> scores for each element of the minibatch
         _, pred_ = output.topk(maxk, 1, True, True)
         pred = pred_.t()
-        correct = pred.eq(target.view(1, -1).expand_as(pred))
+        # Check if predictions match targets
+        correct = pred.eq(target.reshape(1, -1).expand_as(pred))
 
         res = []
         for k in ks:
-            correct_k = correct[:k].view(-1).float().sum(0, keepdim=True)
+            # Using reshape instead of view for better compatibility with non-contiguous tensors
+            correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(1.0 / batch_size))
         return res, pred_

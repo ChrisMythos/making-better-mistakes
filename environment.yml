@@ -1,22 +1,26 @@
 name: better_mistakes
 channels:
-    - pytorch
-    - anaconda
-    - menpo
-    - conda-forge
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
 dependencies:
-    - python=3.6
-    - pip
-    - numpy
-    - cudatoolkit=9.0
-    - pytorch=1.1
-    - torchvision
-    - nltk
-    - tensorboardX
-    - tensorflow
-    - git-lfs
-    - tensorboard
-    - pyyaml
-    - pip:
-        - git+https://github.com/facebookresearch/fastText.git
-        - conditional
+  - python=3.10  # PyTorch 2.6 supports Python 3.10
+  - pip
+  - numpy
+  - pytorch=2.0.1  # Stick with a more stable version
+  - torchvision
+  - nltk
+  - protobuf=3.20.3  # Keep this for TensorFlow compatibility
+  - tensorflow=2.10.0  # Last version with Windows GPU support
+  - git-lfs
+  - tensorboard
+  - pyyaml
+  - pip:
+    - fasttext-wheel
+    - conditional
+    - tensorboardX==2.4
+    - pillow
+    - urllib3==1.26.6
+    - chardet==3.0.4
+    - charset-normalizer==2.0.0

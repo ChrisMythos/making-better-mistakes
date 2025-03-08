@@ -17,6 +17,7 @@ def init_model_on_gpu(gpus_per_node, opts):
     else:
         ValueError("Unknown architecture ", opts.arch)
 
+    # Configure model FC layer based on options
     if opts.devise or opts.barzdenzler:
         if opts.pretrained or opts.pretrained_folder:
             for param in model.parameters():
@@ -48,29 +49,65 @@ def init_model_on_gpu(gpus_per_node, opts):
     else:
         model.fc = torch.nn.Sequential(torch.nn.Dropout(opts.dropout), torch.nn.Linear(in_features=feature_dim, out_features=opts.num_classes, bias=True))
 
+    # Check if CUDA is available and properly initialized
+    try:
+        cuda_available = torch.cuda.is_available()
+        if not cuda_available:
+            print("WARNING: CUDA is not available. Running on CPU.")
+            return model  # Return CPU model
+    except Exception as e:
+        print(f"WARNING: Error checking CUDA availability: {e}. Running on CPU.")
+        return model  # Return CPU model
+
+    # Handle GPU device selection more robustly
     if distributed:
-        # For multiprocessing distributed, DistributedDataParallel constructor
-        # should always set the single device scope, otherwise,
-        # DistributedDataParallel will use all available devices.
         if opts.gpu is not None:
-            torch.cuda.set_device(opts.gpu)
-            model.cuda(opts.gpu)
-            # When using a single GPU per process and per
-            # DistributedDataParallel, we need to divide the batch size
-            # ourselves based on the total number of GPUs we have
+            try:
+                # Try newer PyTorch style device handling first
+                device = torch.device(f"cuda:{opts.gpu}")
+                model.to(device)
+                print(f"Using CUDA device {opts.gpu} with newer style device handling")
+            except Exception:
+                try:
+                    # Fall back to the older style
+                    torch.cuda.set_device(opts.gpu)
+                    model.cuda(opts.gpu)
+                    print(f"Using CUDA device {opts.gpu} with older style device handling")
+                except Exception as e:
+                    print(f"WARNING: Could not set CUDA device {opts.gpu}: {e}. Using CPU instead.")
+                    return model
+                    
+            # When using a single GPU per process and per DistributedDataParallel
             opts.batch_size = int(opts.batch_size / gpus_per_node)
             opts.workers = int(opts.workers / gpus_per_node)
             model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[opts.gpu])
         else:
-            model.cuda()
-            # DistributedDataParallel will divide and allocate batch_size to all
-            # available GPUs if device_ids are not set
-            model = torch.nn.parallel.DistributedDataParallel(model)
+            try:
+                model.cuda()
+                model = torch.nn.parallel.DistributedDataParallel(model)
+            except Exception as e:
+                print(f"WARNING: Could not initialize distributed model: {e}. Using CPU instead.")
+                return model
+    # For single GPU
     elif opts.gpu is not None:
-        torch.cuda.set_device(opts.gpu)
-        model = model.cuda(opts.gpu)
+        try:
+            # Try newer PyTorch style device handling first
+            device = torch.device(f"cuda:{opts.gpu}")
+            model = model.to(device)
+            print(f"Using CUDA device {opts.gpu} with newer style device handling")
+        except Exception:
+            try:
+                # Fall back to older style
+                torch.cuda.set_device(opts.gpu)
+                model = model.cuda(opts.gpu)
+                print(f"Using CUDA device {opts.gpu} with older style device handling")
+            except Exception as e:
+                print(f"WARNING: Could not set CUDA device {opts.gpu}: {e}. Using CPU instead.")
+    # For DataParallel (multiple GPUs)
     else:
-        # DataParallel will divide and allocate batch_size to all available GPUs
-        model = torch.nn.DataParallel(model).cuda()
+        try:
+            model = torch.nn.DataParallel(model).cuda()
+        except Exception as e:
+            print(f"WARNING: Could not initialize data parallel model: {e}. Using CPU instead.")
 
     return model
