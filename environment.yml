@@ -16,6 +16,7 @@ dependencies:
   - git-lfs
   - tensorboard
   - pyyaml
+  - matplotlib
   - pip:
     - fasttext-wheel
     - conditional
