@@ -1,0 +1,10 @@
+imagenet-data/
+.vscode/
+*.pyc
+imagenet-object-localization-challenge/
+temp_splits/
+scripts/crossentropy_tieredimagenet
+data_paths.yml
+imagenet-object-localization-challenge.zip
+better_mistakes.egg-info
+data/tree_visualisation
