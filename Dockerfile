@@ -1,8 +1,8 @@
-FROM nvidia/cuda:10.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:12.8.0-devel-ubuntu24.04
 
 # Make things work with Anaconda
-ARG PYTHON_VERSION=3.6
-ARG conda_version=Miniconda3-4.6.14-Linux-x86_64
+ARG PYTHON_VERSION=3.10
+ARG conda_version=Miniconda3-latest-Linux-x86_64.sh
 
 ENV PYTHON_VERSION=${python}
 ENV CONDA_DIR /opt/conda
