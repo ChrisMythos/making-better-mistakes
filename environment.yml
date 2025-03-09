@@ -5,14 +5,13 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.10  # PyTorch 2.6 supports Python 3.10
+  - python=3.12  # Python 3.12 is well-supported by most packages now
   - pip
-  - numpy
-  - pytorch=2.0.1  # Stick with a more stable version
+  - numpy>=1.26.0  # Fully compatible with Python 3.12
+  - pytorch=2.2.0  # Latest stable version compatible with Python 3.12
   - torchvision
-  - nltk
-  - protobuf=3.20.3  # Keep this for TensorFlow compatibility
-  - tensorflow=2.10.0  # Last version with Windows GPU support
+  - nltk>=3.8.1
+  - protobuf=4.23.4  # Updated from 3.20.3
   - git-lfs
   - tensorboard
   - pyyaml
@@ -21,8 +20,8 @@ dependencies:
   - pip:
     - fasttext-wheel
     - conditional
-    - tensorboardX==2.4
-    - pillow
-    - urllib3==1.26.6
-    - chardet==3.0.4
-    - charset-normalizer==2.0.0
+    - pillow>=10.0.0
+    - urllib3>=2.0.0
+    - chardet>=5.0.0
+    - charset-normalizer>=3.0.0
+    - tensorflow==2.16.1
