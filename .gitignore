@@ -8,3 +8,4 @@ data_paths.yml
 imagenet-object-localization-challenge.zip
 better_mistakes.egg-info
 data/tree_visualisation
+scripts/HXE_tieredimagenet
