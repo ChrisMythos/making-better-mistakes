@@ -13,7 +13,7 @@ run_experiment() {
     echo "----------------------------------------"
     
     # Run the experiment
-    bash "$1"
+    bash $1
     
     # Check if experiment completed successfully
     if [ $? -eq 0 ]; then
@@ -29,11 +29,11 @@ run_experiment() {
 }
 
 # Run all inaturalist19 experiments
-run_experiment "experiments/barzdenzler_inaturalist19.sh"
-run_experiment "experiments/crossentropy_inaturalist19.sh"
-run_experiment "experiments/hxe_inaturalist19_alpha0.5.sh"
-run_experiment "experiments/softlabels_inaturalist19_beta15.sh"
-run_experiment "experiments/yolov2_inaturalist19.sh"
+run_experiment barzdenzler_inaturalist19.sh
+run_experiment crossentropy_inaturalist19.sh
+run_experiment hxe_inaturalist19_alpha0.5.sh
+run_experiment softlabels_inaturalist19_beta15.sh
+run_experiment yolov2_inaturalist19.sh
 
 echo "All inaturalist19 experiments completed"
 echo "Time: $(date)"
