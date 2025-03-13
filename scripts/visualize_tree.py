@@ -174,8 +174,7 @@ def visualize_tree(tree, output_file, max_depth=3, width=20, height=12, interact
                     colorbar=dict(
                         thickness=15,
                         title='Node Connections',
-                        xanchor='left',
-                        titleside='right'
+                        xanchor='left'
                     )
                 )
             )
