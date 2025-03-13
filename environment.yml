@@ -16,6 +16,7 @@ dependencies:
   - tensorboard
   - pyyaml
   - matplotlib
+  - tensorboardX
   - plotly
   - pip:
     - fasttext-wheel
