@@ -38,7 +38,7 @@ def run_nn(loader, model, loss_function, distances, classes, opts, epoch, prev_s
     loss_accum = 0.0
     time_accum = 0.0
     norm_mistakes_accum = 0.0
-    flat_accuracy_accums = np.zeros(len(topK_to_consider), dtype=np.float)
+    flat_accuracy_accums = np.zeros(len(topK_to_consider), dtype=float)
     hdist_accums = np.zeros(len(topK_to_consider))
     hdist_top_accums = np.zeros(len(topK_to_consider))
     hdist_mistakes_accums = np.zeros(len(topK_to_consider))

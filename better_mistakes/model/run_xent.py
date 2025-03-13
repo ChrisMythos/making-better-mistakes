@@ -46,7 +46,7 @@ def run(loader, model, loss_function, distances, all_soft_labels, classes, opts,
     loss_accum = 0.0
     time_accum = 0.0
     norm_mistakes_accum = 0.0
-    flat_accuracy_accums = np.zeros(len(topK_to_consider), dtype=np.float64)
+    flat_accuracy_accums = np.zeros(len(topK_to_consider), dtype=float)
     hdist_accums = np.zeros(len(topK_to_consider))
     hdist_top_accums = np.zeros(len(topK_to_consider))
     hdist_mistakes_accums = np.zeros(len(topK_to_consider))
