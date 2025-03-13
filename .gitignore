@@ -10,3 +10,6 @@ better_mistakes.egg-info
 data/tree_visualisation
 scripts/HXE_tieredimagenet
 scripts/softlables_tieredimagenet
+data/nat-224-splits
+
+experiments/barzdenzler_inaturalist19
