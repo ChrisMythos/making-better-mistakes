@@ -31,9 +31,27 @@ run_experiment() {
 # Run all inaturalist19 experiments
 run_experiment barzdenzler_inaturalist19.sh
 run_experiment crossentropy_inaturalist19.sh
-run_experiment hxe_inaturalist19_alpha0.5.sh
 run_experiment softlabels_inaturalist19_beta15.sh
+run_experiment hxe_inaturalist19_alpha0.5.sh
 run_experiment yolov2_inaturalist19.sh
+
+echo "All diffrent inaturalist19 experiments are completed. Now running additional experiments with varying hyperparameters"
+echo "Time: $(date)"
+
+# Additional experiments for inaturalist19 with varying hyperparameters
+run_experiment softlabels_inaturalist19_beta04.sh
+run_experiment softlabels_inaturalist19_beta05.sh
+run_experiment softlabels_inaturalist19_beta10.sh
+run_experiment hxe_inaturalist19_alpha0.6.sh
+run_experiment hxe_inaturalist19_alpha0.7.sh
+run_experiment hxe_inaturalist19_alpha0.8.sh
+run_experiment hxe_inaturalist19_alpha0.9.sh
+run_experiment hxe_inaturalist19_alpha0.1.sh
+run_experiment hxe_inaturalist19_alpha0.2.sh
+run_experiment hxe_inaturalist19_alpha0.3.sh
+run_experiment hxe_inaturalist19_alpha0.4.sh
+run_experiment softlabels_inaturalist19_beta20.sh
+run_experiment softlabels_inaturalist19_beta30.sh
 
 echo "All inaturalist19 experiments completed"
 echo "Time: $(date)"
